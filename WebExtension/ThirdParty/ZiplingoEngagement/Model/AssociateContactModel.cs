@@ -42,5 +42,7 @@ namespace WebExtension.ThirdParty.ZiplingoEngagement.Model
         public string SponsorMobile { get; set; }
         public string SponsorEmail { get; set; }
         public DateTime? OrderDate { get; set; }
+        public DateTime JoinDate { get; set; }
+        public bool ActiveAutoship { get; set; }
     }
 }

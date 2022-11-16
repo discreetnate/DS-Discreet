@@ -166,6 +166,7 @@ namespace WebExtension.ThirdParty
                 var CardLastFourDegit = _ZiplingoEngagementRepository.GetLastFoutDegitByOrderNumber(order.Order.OrderNumber);
                 OrderData data = new OrderData
                 {
+                    ShipMethodId = order.ShipMethodId, //ShipMethodId added
                     AssociateId = order.Order.AssociateId,
                     BackofficeId = order.Order.BackofficeId,
                     Email = order.Order.Email,
@@ -347,6 +348,8 @@ namespace WebExtension.ThirdParty
                 (int enrollerID, int sponsorID) = GetEnrollerAndSponsorID(order.AssociateId);
                 (Associate sponsorSummary, Associate enrollerSummary) = GetEnrollerAndSponsorSummary(enrollerID, sponsorID);
 
+                var associateSummary = _distributorService.GetAssociate(order.AssociateId);
+                var associateOrders = _orderService.GetOrdersByAssociateId(order.AssociateId, "");
                 var ZiplingoEngagementRequest = new AssociateContactModel
                 {
                     AssociateId = associateInfo.AssociateId,
@@ -379,7 +382,9 @@ namespace WebExtension.ThirdParty
                     EnrollerEmail = enrollerSummary.EmailAddress,
                     SponsorName = sponsorSummary.DisplayFirstName + ' ' + sponsorSummary.DisplayLastName,
                     SponsorMobile = sponsorSummary.PrimaryPhone,
-                    SponsorEmail = sponsorSummary.EmailAddress
+                    SponsorEmail = sponsorSummary.EmailAddress,
+                    JoinDate = associateSummary.Result.SignupDate.ToUniversalTime(),
+                    ActiveAutoship = associateOrders.Result.Where(o => o.OrderType == OrderType.Autoship).Any()
                 };
 
                 var jsonZiplingoEngagementRequest = JsonConvert.SerializeObject(ZiplingoEngagementRequest);
@@ -406,6 +411,7 @@ namespace WebExtension.ThirdParty
                 (int enrollerID, int sponsorID) = GetEnrollerAndSponsorID(req.AssociateId);
                 (Associate sponsorSummary, Associate enrollerSummary) = GetEnrollerAndSponsorSummary(enrollerID, sponsorID);
 
+                var associateSummary = _distributorService.GetAssociate(req.AssociateId);
                 var ZiplingoEngagementRequest = new AssociateContactModel
                 {
                     AssociateId = req.AssociateId,
@@ -438,14 +444,16 @@ namespace WebExtension.ThirdParty
                     EnrollerEmail = enrollerSummary.EmailAddress,
                     SponsorName = sponsorSummary.DisplayFirstName + ' ' + sponsorSummary.DisplayLastName,
                     SponsorMobile = sponsorSummary.PrimaryPhone,
-                    SponsorEmail = sponsorSummary.EmailAddress
+                    SponsorEmail = sponsorSummary.EmailAddress,
+                    JoinDate = associateSummary.Result.SignupDate.ToUniversalTime(),
+                    ActiveAutoship = false
                 };
 
                 var jsonZiplingoEngagementRequest = JsonConvert.SerializeObject(ZiplingoEngagementRequest);
                 CallZiplingoEngagementApi(jsonZiplingoEngagementRequest, "Contact/CreateContactV2");
                 ZiplingoEngagementRequest request = new ZiplingoEngagementRequest();
                
-                     request = new ZiplingoEngagementRequest { associateid = req.AssociateId, companyname = settings.CompanyName, eventKey = "Enrollment", data = jsonZiplingoEngagementRequest };
+                request = new ZiplingoEngagementRequest { associateid = req.AssociateId, companyname = settings.CompanyName, eventKey = "Enrollment", data = jsonZiplingoEngagementRequest };
                
                 var jsonReq = JsonConvert.SerializeObject(request);
                 CallZiplingoEngagementApi(jsonReq, "Campaign/ExecuteTrigger");
@@ -466,7 +474,10 @@ namespace WebExtension.ThirdParty
                 var AssociateInfo = _distributorService.GetAssociate(req.AssociateId).GetAwaiter().GetResult();
                 (int enrollerID, int sponsorID) = GetEnrollerAndSponsorID(req.AssociateId);
                 (Associate sponsorSummary, Associate enrollerSummary) = GetEnrollerAndSponsorSummary(enrollerID, sponsorID);
-                
+
+                var associateSummary = _distributorService.GetAssociate(req.AssociateId);
+                var associateOrders = _orderService.GetOrdersByAssociateId(req.AssociateId, "");
+
                 var ZiplingoEngagementRequest = new AssociateContactModel
                 {
                     AssociateId = AssociateInfo.AssociateId,
@@ -499,7 +510,9 @@ namespace WebExtension.ThirdParty
                     EnrollerEmail = enrollerSummary.EmailAddress,
                     SponsorName = sponsorSummary.DisplayFirstName + ' ' + sponsorSummary.DisplayLastName,
                     SponsorMobile = sponsorSummary.PrimaryPhone,
-                    SponsorEmail = sponsorSummary.EmailAddress
+                    SponsorEmail = sponsorSummary.EmailAddress,
+                    JoinDate = associateSummary.Result.SignupDate.ToUniversalTime(),
+                    ActiveAutoship = associateOrders.Result.Where(o => o.OrderType == OrderType.Autoship).Any()
                 };
 
                 var jsonReq = JsonConvert.SerializeObject(ZiplingoEngagementRequest);
