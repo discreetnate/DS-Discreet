@@ -46,5 +46,6 @@ namespace WebExtension.ThirdParty.ZiplingoEngagement.Model
         public List<OrderLineItem> ProductInfo { get; set; }
         public Address ShippingAddress { get; set; }
         public Address BillingAddress { get; set; }
+        public string TrackingUrl { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using DirectScale.Disco.Extension.Hooks.Commissions;
 using WebExtension.Helper;
 using WebExtension.Services;
+using System.Text.RegularExpressions;
 
 namespace WebExtension.ThirdParty
 {
@@ -164,6 +165,25 @@ namespace WebExtension.ThirdParty
                 (Associate sponsorSummary, Associate enrollerSummary) = GetEnrollerAndSponsorSummary(enrollerID,sponsorID);
 
                 var CardLastFourDegit = _ZiplingoEngagementRepository.GetLastFoutDegitByOrderNumber(order.Order.OrderNumber);
+
+
+                // Track Shipping -----------------------------
+                var TrackingUrl = "";
+                var ShippingTrackingInfo = _ZiplingoEngagementRepository.GetShippingTrackingInfo();
+                if (order.TrackingNumber != null)
+                {
+                    foreach (var shipInfo in ShippingTrackingInfo)
+                    {
+                        Match m1 = Regex.Match(order.TrackingNumber, shipInfo.TrackPattern, RegexOptions.IgnoreCase);
+                        if (m1.Success)
+                        {
+                            TrackingUrl = shipInfo.ShippingUrl + order.TrackingNumber;
+                            break;
+                        }
+                    }
+                }
+
+                // Track Shipping -----------------------------
                 OrderData data = new OrderData
                 {
                     ShipMethodId = order.ShipMethodId, //ShipMethodId added
@@ -190,6 +210,7 @@ namespace WebExtension.ThirdParty
                     CompanyDomain = company.BackOfficeHomePageURL,
                     LogoUrl = settings.LogoUrl,
                     TrackingNumber = order.TrackingNumber,
+                    TrackingUrl = TrackingUrl,
                     Carrier = order.Carrier,
                     DateShipped = order.DateShipped,
                     CompanyName = settings.CompanyName,

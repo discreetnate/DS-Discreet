@@ -16,5 +16,7 @@ namespace WebExtension.ThirdParty.Interfaces
         string GetUsernameById(string associateId);
         string GetLastFoutDegitByOrderNumber(int orderId);
         string GetStatusById(int statusId);
+
+        List<ShippingTrackingInfo> GetShippingTrackingInfo();
     }
 }

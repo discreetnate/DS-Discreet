@@ -4,6 +4,7 @@ using WebExtension.ThirdParty.ZiplingoEngagement.Model;
 using System.Collections.Generic;
 using Dapper;
 using DirectScale.Disco.Extension.Services;
+using System.Linq;
 
 namespace WebExtension.ThirdParty
 {
@@ -201,6 +202,16 @@ namespace WebExtension.ThirdParty
                 var query = @"SELECT StatusName FROM CRM_AssociateStatuses WHERE recordnumber = @statusId";
 
                 var result = dbConnection.QueryFirstOrDefault<string>(query, parameter);
+                return result;
+            }
+        }
+
+        public List<ShippingTrackingInfo> GetShippingTrackingInfo()
+        {
+            using (var dbConnection = new System.Data.SqlClient.SqlConnection(_dataService.GetClientConnectionString().GetAwaiter().GetResult()))
+            {
+                var query = $"SELECT ShippingUrl,TrackPattern FROM client.ShippingTrackingUrl";
+                var result = dbConnection.Query<ShippingTrackingInfo>(query).ToList();
                 return result;
             }
         }
