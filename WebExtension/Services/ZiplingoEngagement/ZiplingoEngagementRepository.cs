@@ -4,13 +4,14 @@ using Dapper;
 using DirectScale.Disco.Extension.Services;
 using System.Linq;
 using WebExtension.Services.ZiplingoEngagement.Model;
-using WebExtension.Services.ZiplingoEngagementService.Model;
+using WebExtension.Models;
 
 namespace WebExtension.Services.ZiplingoEngagement
 {
     public interface IZiplingoEngagementRepository
     {
         ZiplingoEngagementSettings GetSettings();
+        EWalletSettingModel GetEWalletSetting();
         void UpdateSettings(ZiplingoEngagementSettingsRequest settings);
         void ResetSettings();
         ShipInfo GetOrderNumber(int packageId);
@@ -47,7 +48,15 @@ namespace WebExtension.Services.ZiplingoEngagement
                 return dbConnection.QueryFirstOrDefault<ZiplingoEngagementSettings>(settingsQuery);
             }
         }
+        public EWalletSettingModel GetEWalletSetting()
+        {
+            using (var dbConnection = new System.Data.SqlClient.SqlConnection(_dataService.GetClientConnectionString().Result))
+            {
+                var settingsQuery = "SELECT * FROM Client.Ewallet_Settings";
 
+                return dbConnection.QueryFirstOrDefault<EWalletSettingModel>(settingsQuery);
+            }
+        }
         public List<ZiplingoEventSettings> GetEventSettingsList()
         {
             using (var dbConnection = new System.Data.SqlClient.SqlConnection(_dataService.GetClientConnectionString().Result))

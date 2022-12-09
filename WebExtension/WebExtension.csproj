@@ -11,6 +11,11 @@
     <None Remove="Pages\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Views\CustomPage\EWalletSettings.cshtml" />
+    <None Include="Views\CustomPage\ZiplingoEngagementSetting.cshtml" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="DirectScale.Disco.Extension.Abstractions" Version="1.0.5298" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />

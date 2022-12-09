@@ -71,6 +71,11 @@ namespace WebExtension
             //DS
             services.AddDirectScale(c =>
             {
+
+                //Custom Pages
+                c.AddCustomPage(Menu.Settings, "EWalletSettings", "EWalletSettings", "/CustomPage/EWalletSettings");
+                c.AddCustomPage(Menu.Settings, "ZiplingoEngagementSetting", "ZiplingoEngagementSetting", "/CustomPage/ZiplingoEngagementSetting");
+
                 //Hooks
                 c.AddHook<UpdateAssociateHook>();
                 c.AddHook<WriteApplication>();

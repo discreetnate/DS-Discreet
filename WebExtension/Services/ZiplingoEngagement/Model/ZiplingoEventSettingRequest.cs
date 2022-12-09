@@ -1,7 +1,7 @@
 ﻿using System;
 using WebExtension.Services.ZiplingoEngagement.Model;
 
-namespace WebExtension.Services.ZiplingoEngagementService.Model
+namespace WebExtension.Services.ZiplingoEngagement.Model
 {
     public class ZiplingoEventSettingRequest : CommandRequest
     {
