@@ -79,7 +79,8 @@ namespace WebExtension
                 c.AddHook<MarkPackageShippedHook>();
                 c.AddHook<FinalizeAcceptedOrderHook>();
                 c.AddHook<FinalizeNonAcceptedOrderHook>();
-
+                //Event Handler
+                c.AddEventHandler("DailyEvent", "/api/webhooks/DailyEvent");
             });
 
             services.AddControllersWithViews();
