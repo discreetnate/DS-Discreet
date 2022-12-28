@@ -81,6 +81,10 @@ namespace WebExtension
                 c.AddHook<FinalizeNonAcceptedOrderHook>();
                 //Event Handler
                 c.AddEventHandler("DailyEvent", "/api/webhooks/DailyEvent");
+
+                //Merchants
+                c.AddMerchant<PaymentureEwalletMoneyOut>(9960, "PaymentureEwallet", "PaymentureEwallet", "USD");
+                c.AddMerchant<PaymentureEwalletMoneyInMerchant>(9961, "PaymentureEwallet", "PaymentureEwallet", "USD");
             });
 
             services.AddControllersWithViews();
