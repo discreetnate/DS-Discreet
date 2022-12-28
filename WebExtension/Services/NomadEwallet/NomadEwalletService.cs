@@ -26,12 +26,12 @@ namespace WebExtension.Services
         private readonly IAssociateService _associateService;
         private const string NomadEwalletBaseUrlSandbox = "https://api.nomadewallet.dev/";
         private const string NomadEwalletBaseUrlLive = "https://api.nomadewallet.com/";
-        private const string NomadEwalletUrlLive = " https://ewallet.avinihealth.com/";
-        private const string NomadEwalletUrlStage = " https://avini.nomadewallet.dev/";
-        private const string SandboxUsername = "APIAviniDev";
-        private const string LiveUsername = "APIAviniLive";
-        private const string SandboxPassword = "Elequent1377*";
-        private const string LivePassword = "Elequent1377*";
+        private const string NomadEwalletUrlLive = "https://ewallet.discreet.com/";
+        private const string NomadEwalletUrlStage = "https://ewallet.discreet.dev/";
+        private const string SandboxUsername = "";
+        private const string LiveUsername = "DiscreetAPI";
+        private const string SandboxPassword = "";
+        private const string LivePassword = "YYYAzTj;ce2Br0(";
         private readonly string tokenType = "authorization";
         private const string AuthMethod = "api/Authenticate/login";
         private const string BalanceMethod = "api/AccountData/DirectScaleAccountBalance";
