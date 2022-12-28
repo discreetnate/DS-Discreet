@@ -66,7 +66,7 @@ namespace WebExtension
             services.AddSingleton<IHttpClientService, HttpClientService>();
             services.AddSingleton<IZiplingoEngagementService, ZiplingoEngagementService>();
             services.AddSingleton<IDailyRunService, DailyRunService>();
-            
+            services.AddSingleton<INomadEwalletService, NomadEwalletService>();
 
             //DS
             services.AddDirectScale(c =>
