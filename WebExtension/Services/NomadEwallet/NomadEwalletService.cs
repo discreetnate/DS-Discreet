@@ -26,7 +26,7 @@ namespace WebExtension.Services
         private readonly IAssociateService _associateService;
         private const string NomadEwalletBaseUrlSandbox = "https://api.nomadewallet.dev/";
         private const string NomadEwalletBaseUrlLive = "https://api.nomadewallet.com/";
-        private const string NomadEwalletUrlLive = "https://ewallet.discreet.com/";
+        private const string NomadEwalletUrlLive = "https://ewallet.discreet.biz/";
         private const string NomadEwalletUrlStage = "https://ewallet.discreet.dev/";
         private const string SandboxUsername = "";
         private const string LiveUsername = "DiscreetAPI";
